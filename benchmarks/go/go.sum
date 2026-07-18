@@ -1,2 +1,4 @@
 github.com/go-ruby-yaml/yaml v0.0.0-20260629093916-8035038027bd h1:4HGjgCdTIuIEM+iZXJ9hJJzt0IBMtxPqdJq72mr0Y64=
 github.com/go-ruby-yaml/yaml v0.0.0-20260629093916-8035038027bd/go.mod h1:HtbQgnZpSTJBAhPg1jOKgHycZl3tXgf9ZdOu4dnHWjQ=
+github.com/go-ruby-yaml/yaml v0.0.0-20260717075639-2167ed0eb6ea h1:9/Qs7K0qUSiMewF1Ziy5RRLkbmfyQucTqBpqZDB5I1E=
+github.com/go-ruby-yaml/yaml v0.0.0-20260717075639-2167ed0eb6ea/go.mod h1:HtbQgnZpSTJBAhPg1jOKgHycZl3tXgf9ZdOu4dnHWjQ=
