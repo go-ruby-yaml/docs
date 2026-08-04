@@ -382,9 +382,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mri-conformance" class="md-nav__link">
+  <a href="#conformance" class="md-nav__link">
     <span class="md-ellipsis">
-      MRI conformance
+      Conformance
     </span>
   </a>
   
@@ -521,9 +521,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mri-conformance" class="md-nav__link">
+  <a href="#conformance" class="md-nav__link">
     <span class="md-ellipsis">
-      MRI conformance
+      Conformance
     </span>
   </a>
   
@@ -581,12 +581,18 @@
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">// refusing arbitrary !ruby/object: instantiation.</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="kd">func</span><span class="w"> </span><span class="nx">SafeLoad</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">Value</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="mri-conformance">MRI conformance<a class="headerlink" href="#mri-conformance" title="Permanent link">&para;</a></h2>
-<p>Correctness is defined by reference Ruby. A <strong>differential oracle</strong> runs a wide
-corpus through both the system <code>ruby</code> and this library and compares the results
-<strong>byte-for-byte</strong> — not approximated from memory. The oracle tests skip
-themselves where <code>ruby</code> is not on <code>PATH</code> (e.g. the qemu arch lanes), so the
-cross-arch builds still validate the library.</p>
+<h2 id="conformance">Conformance<a class="headerlink" href="#conformance" title="Permanent link">&para;</a></h2>
+<p>The loader is validated against the upstream
+<a href="https://github.com/yaml/yaml-test-suite">yaml-test-suite</a> on its
+schema-independent <strong>accept/reject</strong> axis and passes <strong>all 402/402 tests</strong> —
+<strong>308/308 well-formed documents load</strong> and <strong>94/94 ill-formed inputs are
+rejected</strong> (0 panics, 0 known gaps). A ratchet test fails on any regression.</p>
+<p><a href="https://github.com/yaml/yaml-test-suite"><img alt="yaml-test-suite 402/402" src="https://img.shields.io/badge/yaml--test--suite-402%2F402-1a7f37" /></a></p>
+<p>Byte-exact correctness is additionally defined by reference Ruby: a <strong>differential
+oracle</strong> runs a wide corpus through both the system <code>ruby</code> and this library and
+compares the results <strong>byte-for-byte</strong> — not approximated from memory. The oracle
+tests skip themselves where <code>ruby</code> is not on <code>PATH</code> (e.g. the qemu arch lanes), so
+the cross-arch builds still validate the library.</p>
 <h2 id="relationship-to-ruby">Relationship to Ruby<a class="headerlink" href="#relationship-to-ruby" title="Permanent link">&para;</a></h2>
 <p><code>go-ruby-yaml/yaml</code> is <strong>standalone and reusable</strong>, and is the backend bound into
 <a href="https://github.com/go-embedded-ruby/ruby">go-embedded-ruby</a> by <code>rbgo</code> as a

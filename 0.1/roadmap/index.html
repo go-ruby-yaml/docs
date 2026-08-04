@@ -521,6 +521,11 @@ deterministic, interpreter-independent slice extracted from rbgo's internals —
 <td><strong>Done</strong></td>
 </tr>
 <tr>
+<td>yaml-test-suite conformance</td>
+<td>The loader passes the full upstream <a href="https://github.com/yaml/yaml-test-suite">yaml-test-suite</a> accept/reject axis — <strong>402/402</strong>: accept 308/308 well-formed documents load, reject 94/94 ill-formed inputs are rejected (0 panics, 0 known gaps), held by a regression ratchet.</td>
+<td><strong>Done</strong></td>
+</tr>
+<tr>
 <td>Differential oracle &amp; coverage</td>
 <td>A wide value corpus dumped and loaded both here and by the system <code>ruby</code>/Psych, compared byte-for-byte; 100% coverage, gofmt + go vet clean, green across all six 64-bit Go arches and three OSes.</td>
 <td><strong>Done</strong></td>
