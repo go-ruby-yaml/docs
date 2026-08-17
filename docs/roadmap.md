@@ -12,6 +12,7 @@ deterministic, interpreter-independent slice extracted from rbgo's internals —
 | Load & SafeLoad | `Load(s)` builds the full Ruby value graph; `SafeLoad` restricts to the safe scalar/collection subset, refusing arbitrary `!ruby/object:` instantiation exactly as Psych's safe loader does. | **Done** |
 | Anchors, aliases & Ruby tags | Anchors `&a` and aliases `*a` for shared and cyclic structure, plus the `!ruby/object:`, `!ruby/symbol`, `!ruby/range` and related tags round-tripped the way Psych writes and reads them. | **Done** |
 | Ruby scalar types | `Symbol`, `Time`, `Range` and arbitrary-precision bignum scalars emitted and parsed with Psych's tag and formatting conventions. | **Done** |
+| yaml-test-suite conformance | The loader passes the full upstream [yaml-test-suite](https://github.com/yaml/yaml-test-suite) accept/reject axis — **402/402**: accept 308/308 well-formed documents load, reject 94/94 ill-formed inputs are rejected (0 panics, 0 known gaps), held by a regression ratchet. | **Done** |
 | Differential oracle & coverage | A wide value corpus dumped and loaded both here and by the system `ruby`/Psych, compared byte-for-byte; 100% coverage, gofmt + go vet clean, green across all six 64-bit Go arches and three OSes. | **Done** |
 
 ## Documented out-of-scope boundaries
