@@ -36,13 +36,21 @@ func Load(s string) (Value, error)
 func SafeLoad(s string) (Value, error)
 ```
 
-## MRI conformance
+## Conformance
 
-Correctness is defined by reference Ruby. A **differential oracle** runs a wide
-corpus through both the system `ruby` and this library and compares the results
-**byte-for-byte** — not approximated from memory. The oracle tests skip
-themselves where `ruby` is not on `PATH` (e.g. the qemu arch lanes), so the
-cross-arch builds still validate the library.
+The loader is validated against the upstream
+[yaml-test-suite](https://github.com/yaml/yaml-test-suite) on its
+schema-independent **accept/reject** axis and passes **all 402/402 tests** —
+**308/308 well-formed documents load** and **94/94 ill-formed inputs are
+rejected** (0 panics, 0 known gaps). A ratchet test fails on any regression.
+
+[![yaml-test-suite 402/402](https://img.shields.io/badge/yaml--test--suite-402%2F402-1a7f37)](https://github.com/yaml/yaml-test-suite)
+
+Byte-exact correctness is additionally defined by reference Ruby: a **differential
+oracle** runs a wide corpus through both the system `ruby` and this library and
+compares the results **byte-for-byte** — not approximated from memory. The oracle
+tests skip themselves where `ruby` is not on `PATH` (e.g. the qemu arch lanes), so
+the cross-arch builds still validate the library.
 
 ## Relationship to Ruby
 

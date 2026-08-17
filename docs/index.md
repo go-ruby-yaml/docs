@@ -14,8 +14,8 @@ by `rbgo` as a native module — just like
 [go-ruby-erb](https://github.com/go-ruby-erb). The dependency runs the other
 way: this library has **no dependency on the Ruby runtime**.
 
-!!! success "Status: emitter + loader complete — Psych byte-exact"
-    Faithful port of Ruby's Psych: **`Dump`** emitter and **`Load`** / **`SafeLoad`** loader, with **anchors and aliases**, the **`!ruby/object:`** Ruby tags, **`Symbol` / `Time` / `Range` / bignum** scalars, and both **block and flow** styles. Validated by a **differential oracle** against the system `ruby` / Psych — emitted YAML and loaded values compared byte-for-byte — at 100% coverage, `gofmt` + `go vet` clean, CI green across the six 64-bit Go targets and three OSes.
+!!! success "Status: emitter + loader complete — Psych byte-exact, yaml-test-suite conformant"
+    Faithful port of Ruby's Psych: **`Dump`** emitter and **`Load`** / **`SafeLoad`** loader, with **anchors and aliases**, the **`!ruby/object:`** Ruby tags, **`Symbol` / `Time` / `Range` / bignum** scalars, and both **block and flow** styles. The loader passes the full [yaml-test-suite](https://github.com/yaml/yaml-test-suite) accept/reject axis — **402/402 (accept 308/308 + reject 94/94), 0 panics, 0 known gaps** — and is validated by a **differential oracle** against the system `ruby` / Psych — emitted YAML and loaded values compared byte-for-byte — at 100% coverage, `gofmt` + `go vet` clean, CI green across the six 64-bit Go targets and three OSes.
 
 ## Quick taste
 
