@@ -1,18 +1,26 @@
-# Usage & API
+---
+title: "Usage & API"
+weight: 30
+---
+
+# Usage & API {#usage-api}
 
 The public API lives at the module root (`github.com/go-ruby-yaml/yaml`). It is **Ruby-shaped but Go-idiomatic**: `Dump` / `Load` mirror Psych's `Psych.dump` / `Psych.load`, while the surface follows Go conventions — an explicit `error`, value types, no global state.
 
-!!! success "Status: implemented"
-    The library is built and importable as `github.com/go-ruby-yaml/yaml`, bound into
-    `rbgo` as a native module; see [Roadmap](roadmap.md).
+{{< callout type="info" >}}
+**Status: implemented**
 
-## Install
+The library is built and importable as `github.com/go-ruby-yaml/yaml`, bound into
+`rbgo` as a native module; see [Roadmap]({{< relref "roadmap.md" >}}).
+{{< /callout >}}
+
+## Install {#install}
 
 ```sh
 go get github.com/go-ruby-yaml/yaml
 ```
 
-## Worked example
+## Worked example {#worked-example}
 
 ```go
 s, _ := yaml.Dump(map[string]any{"a": 1, "b": []any{2, 3}})
@@ -22,7 +30,7 @@ v, _ := yaml.Load("--- &a [1, 2]\n*a\n")   // shared via alias
 v, _  = yaml.SafeLoad("--- !ruby/object:Foo {}")  // refused: error
 ```
 
-## Shape
+## Shape {#shape}
 
 ```go
 // Dump emits Psych-compatible YAML for a Ruby value graph.
@@ -36,7 +44,7 @@ func Load(s string) (Value, error)
 func SafeLoad(s string) (Value, error)
 ```
 
-## Conformance
+## Conformance {#conformance}
 
 The loader is validated against the upstream
 [yaml-test-suite](https://github.com/yaml/yaml-test-suite) on its
@@ -52,7 +60,7 @@ compares the results **byte-for-byte** — not approximated from memory. The ora
 tests skip themselves where `ruby` is not on `PATH` (e.g. the qemu arch lanes), so
 the cross-arch builds still validate the library.
 
-## Relationship to Ruby
+## Relationship to Ruby {#relationship-to-ruby}
 
 `go-ruby-yaml/yaml` is **standalone and reusable**, and is the backend bound into
 [go-embedded-ruby](https://github.com/go-embedded-ruby/ruby) by `rbgo` as a
