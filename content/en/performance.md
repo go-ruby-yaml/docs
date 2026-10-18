@@ -1,11 +1,16 @@
-# Performance
+---
+title: "Performance"
+weight: 50
+---
+
+# Performance {#performance}
 
 `go-ruby-yaml/yaml` is the pure-Go library that
 [`rbgo`](https://github.com/go-embedded-ruby/ruby) binds for Ruby's `yaml`. This
 page records a **comparative benchmark** of that module against the reference
 Ruby runtimes, part of the ecosystem-wide per-module parity suite.
 
-## What is measured
+## What is measured {#what-is-measured}
 
 The **same** Ruby script — `YAML.dump` + `YAML.load` round-trip of a representative config structure — is run under every runtime. `rbgo`'s
 number reflects **this pure-Go library doing the work**; every other column is
@@ -24,7 +29,7 @@ before timing.
   (`yaml.rb` + `run.sh`). Reproduce:
   `RBGO=./rbgo TRUFFLE=truffleruby bash bench/modules/run.sh 5`.
 
-## Result (best of 5, ms)
+## Result (best of 5, ms) {#result-best-of-5-ms}
 
 | Runtime | time | vs MRI |
 | --- | ---: | ---: |
@@ -36,15 +41,18 @@ before timing.
 
 rbgo runs on **go-ruby-yaml** and is **~4x faster than MRI** here (0.23x). MRI's YAML round-trip is comparatively heavy; the compiled pure-Go dump/load wins clearly. TruffleRuby pays heavy cold warm-up on this row (3370 ms).
 
-!!! note "Honest framing"
-    JRuby and TruffleRuby are timed **cold, single-shot**, so they carry JVM /
-    Graal startup on every run — read them as one-shot `ruby file.rb` costs, the
-    same way `rbgo` and MRI are measured, not as steady-state JIT numbers. Rows
-    that complete in well under ~200 ms carry the most relative noise; treat
-    their ratios as order-of-magnitude. These are real measured numbers from the
-    2026-06-29 run — nothing is cherry-picked.
+{{< callout type="info" >}}
+**Honest framing**
 
-## Library-level benchmark (Go API vs runtimes) — 2026-07-03
+JRuby and TruffleRuby are timed **cold, single-shot**, so they carry JVM /
+Graal startup on every run — read them as one-shot `ruby file.rb` costs, the
+same way `rbgo` and MRI are measured, not as steady-state JIT numbers. Rows
+that complete in well under ~200 ms carry the most relative noise; treat
+their ratios as order-of-magnitude. These are real measured numbers from the
+2026-06-29 run — nothing is cherry-picked.
+{{< /callout >}}
+
+## Library-level benchmark (Go API vs runtimes) — 2026-07-03 {#library-level-benchmark-go-api-vs-runtimes-2026-07-03}
 
 This section measures the **pure-Go library directly, through its Go API** — not
 the `rbgo` interpreter path recorded above. It isolates the library primitive
@@ -71,7 +79,7 @@ JRuby / TruffleRuby) before any timing.
   Interpreter start-up is outside the timed region, so these are operation costs,
   not `ruby file.rb` process costs.
 
-#### dump-config
+#### dump-config {#dump-config}
 
 | Runtime | ns/op | vs MRI |
 | --- | ---: | ---: |
@@ -81,7 +89,7 @@ JRuby / TruffleRuby) before any timing.
 | JRuby | 32377.5 | 0.60× |
 | TruffleRuby | 145228.5 | 2.68× |
 
-#### load-config
+#### load-config {#load-config}
 
 | Runtime | ns/op | vs MRI |
 | --- | ---: | ---: |
@@ -103,20 +111,26 @@ runtime's output was verified byte-identical to MRI before timing — the anchor
 round-trip exactly. TruffleRuby is a **cold-JIT outlier** on these short loops
 (slower than plain MRI); read its column as order-of-magnitude, not steady state.
 
-!!! note "Reproduce"
-    The harness is committed under
-    [`benchmarks/`](https://github.com/go-ruby-yaml/docs/tree/main/benchmarks):
-    a self-contained Go driver (`go/`, pins the published library via
-    `go.mod`), the equivalent `ruby/yaml.rb` workload, and `run.sh`. Run
-    `bash benchmarks/run.sh`; env `OUTER`/`WARM` tune the pass budget and
-    `RUBY`/`JRUBY`/`TRUFFLERUBY` select the runtime binaries.
+{{< callout type="info" >}}
+**Reproduce**
 
-!!! warning "Warm-up budget & noise — honest framing"
-    Numbers reflect a **fixed warm-process budget** (3 warm-up + 25 timed passes
-    in one process). The JVM/GraalVM JITs (JRuby, TruffleRuby) may need a larger
-    warm-up to reach steady state, so their columns can **understate** peak
-    throughput — most visibly TruffleRuby, whose cold Graal JIT lands slower than
-    MRI on these short loops. Every number here is a **real measured value** from
-    the dated run above — nothing is fabricated, estimated, or cherry-picked. The
-    go-ruby column is the pure-Go library; every other column is that
-    interpreter's own Psych stdlib doing the equivalent work.
+The harness is committed under
+[`benchmarks/`](https://github.com/go-ruby-yaml/docs/tree/main/benchmarks):
+a self-contained Go driver (`go/`, pins the published library via
+`go.mod`), the equivalent `ruby/yaml.rb` workload, and `run.sh`. Run
+`bash benchmarks/run.sh`; env `OUTER`/`WARM` tune the pass budget and
+`RUBY`/`JRUBY`/`TRUFFLERUBY` select the runtime binaries.
+{{< /callout >}}
+
+{{< callout type="warning" >}}
+**Warm-up budget & noise — honest framing**
+
+Numbers reflect a **fixed warm-process budget** (3 warm-up + 25 timed passes
+in one process). The JVM/GraalVM JITs (JRuby, TruffleRuby) may need a larger
+warm-up to reach steady state, so their columns can **understate** peak
+throughput — most visibly TruffleRuby, whose cold Graal JIT lands slower than
+MRI on these short loops. Every number here is a **real measured value** from
+the dated run above — nothing is fabricated, estimated, or cherry-picked. The
+go-ruby column is the pure-Go library; every other column is that
+interpreter's own Psych stdlib doing the equivalent work.
+{{< /callout >}}
